@@ -70,6 +70,11 @@ case "$pkgrelease" in
   fedora*)
     dnf install -y git rpm-build rpmlint dnf-plugins-core
     ;;
+  anolis*)
+    # skipping rpmlint as it requires dependencies not available in the anolis
+    # images
+    dnf install -y git rpm-build dnf-plugins-core
+    ;;
   rockylinux8|almalinux8)
     dnf install -y git rpm-build rpmlint dnf-plugins-core epel-release
     dnf config-manager --set-enabled powertools

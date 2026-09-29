@@ -74,9 +74,8 @@ variable "PKG_PLATFORMS_BASE" {
     buildx = ["darwin/amd64", "darwin/arm64", "linux/amd64", "linux/arm/v6", "linux/arm/v7", "linux/arm64", "linux/ppc64le", "linux/riscv64", "linux/s390x", "windows/amd64", "windows/arm64"]
     # https://github.com/docker/compose/blob/c626befee1596abcc74578cb10dd96ae1667f76f/docker-bake.hcl#L112-L124
     compose = ["darwin/amd64", "darwin/arm64", "linux/amd64", "linux/arm/v6", "linux/arm/v7", "linux/arm64", "linux/ppc64le", "linux/riscv64", "linux/s390x", "windows/amd64", "windows/arm64"]
-    # https://github.com/containerd/containerd/blob/e373060a953aeaa35554e2f667043fed73ff6248/.github/workflows/ci.yml#L142-L162
-    # https://github.com/containerd/containerd/blob/e373060a953aeaa35554e2f667043fed73ff6248/.github/workflows/ci.yml#L133-L134
-    containerd = ["linux/amd64", "linux/arm/v6", "linux/arm/v7", "linux/arm64", "linux/ppc64le", "linux/s390x", "windows/amd64", "windows/arm64"]
+    # loong64 only: built natively on loongarch64
+    containerd = ["linux/loong64"]
     # https://github.com/docker/docker-credential-helpers/blob/f9d3010165b642df37215b1be945552f2c6f0e3b/docker-bake.hcl#L56-L66
     credential-helpers = ["darwin/amd64", "darwin/arm64", "linux/amd64", "linux/arm/v6", "linux/arm/v7", "linux/arm64", "linux/ppc64le", "linux/s390x", "windows/amd64"]
     # Linux/Windows archives include Engine, CLI, and runtimes; Darwin archives are CLI-only.
@@ -100,6 +99,9 @@ variable "PKG_PLATFORMS_EXTRA" {
 variable "PKG_DISTROS" {
   description = "Package-specific distro mapping. Packages omitted here build for all DISTROS."
   default = {
+    # containerd is built for loong64 only, so its distros are restricted to
+    # the ones with a loongarch64 build image.
+    containerd = ["static", "debian13", "anolis23"]
     docker = ["static"]
   }
 }
@@ -243,7 +245,19 @@ target "_distro-static" {
     DISTRO_RELEASE = "static"
     DISTRO_ID = ""
     DISTRO_SUITE = ""
-    DISTRO_IMAGE = DISTRO_IMAGE != null && DISTRO_IMAGE != "" ? DISTRO_IMAGE : "debian:trixie"
+    DISTRO_IMAGE = DISTRO_IMAGE != null && DISTRO_IMAGE != "" ? DISTRO_IMAGE : "lcr.loongnix.cn/library/debian:trixie"
+    TEST_ONLY = "0"
+  }
+}
+
+target "_distro-anolis23" {
+  args = {
+    DISTRO_NAME = "anolis23"
+    DISTRO_TYPE = "rpm"
+    DISTRO_RELEASE = "anolis"
+    DISTRO_ID = "23"
+    DISTRO_SUITE = "23"
+    DISTRO_IMAGE = DISTRO_IMAGE != null && DISTRO_IMAGE != "" ? DISTRO_IMAGE : "lcr.loongnix.cn/openanolis/anolisos:23"
     TEST_ONLY = "0"
   }
 }
@@ -267,7 +281,7 @@ target "_distro-debian13" {
     DISTRO_RELEASE = "debian"
     DISTRO_ID = "13"
     DISTRO_SUITE = "trixie"
-    DISTRO_IMAGE = DISTRO_IMAGE != null && DISTRO_IMAGE != "" ? DISTRO_IMAGE : "debian:trixie"
+    DISTRO_IMAGE = DISTRO_IMAGE != null && DISTRO_IMAGE != "" ? DISTRO_IMAGE : "lcr.loongnix.cn/library/debian:trixie"
     TEST_ONLY = "0"
   }
 }
@@ -512,8 +526,10 @@ function "distroPlatforms" {
       lookup({
         static = pkgPlatforms(pkg)
 
+        anolis23 = ["linux/loong64"]
+
         debian12 = ["linux/386", "linux/amd64", "linux/arm64", "linux/arm/v7", "linux/mips64le", "linux/ppc64le", "linux/s390x"]
-        debian13 = ["linux/386", "linux/amd64", "linux/arm64", "linux/arm/v7", "linux/mips64le", "linux/ppc64le", "linux/riscv64", "linux/s390x"]
+        debian13 = ["linux/386", "linux/amd64", "linux/arm64", "linux/arm/v7", "linux/loong64", "linux/mips64le", "linux/ppc64le", "linux/riscv64", "linux/s390x"]
         ubuntu2204 = ["linux/amd64", "linux/arm64", "linux/arm/v7", "linux/ppc64le", "linux/s390x"]
         ubuntu2404 = ["linux/amd64", "linux/arm64", "linux/arm/v7", "linux/ppc64le", "linux/riscv64", "linux/s390x"]
         ubuntu2604 = ["linux/amd64", "linux/arm64", "linux/arm/v7", "linux/ppc64le", "linux/riscv64", "linux/s390x"]
@@ -584,7 +600,9 @@ target "_pkg-containerd" {
     PKG_REPO = PKG_REPO != null && PKG_REPO != "" ? PKG_REPO : "https://github.com/containerd/containerd.git"
     PKG_REF = PKG_REF != null && PKG_REF != "" ? PKG_REF : "release/2.4"
     GO_VERSION = GO_VERSION != null && GO_VERSION != "" ? GO_VERSION : "1.27.1" # https://github.com/containerd/containerd/blob/release/2.4/.github/workflows/release/Dockerfile
-    GO_IMAGE_VARIANT = GO_IMAGE_VARIANT != null && GO_IMAGE_VARIANT != "" ? GO_IMAGE_VARIANT : "bookworm"
+    # loong64: build with the Loongnix Go toolchain image
+    GO_IMAGE = "lcr.loongnix.cn/library/golang"
+    GO_IMAGE_VARIANT = "forky"
     PKG_DEB_EPOCH = PKG_DEB_EPOCH != null && PKG_DEB_EPOCH != "" ? PKG_DEB_EPOCH : ""
     RUNC_REF = RUNC_REF != null && RUNC_REF != "" ? RUNC_REF : null
     PKG_REMOTE_DOCKERFILE = ".github/workflows/release/Dockerfile"

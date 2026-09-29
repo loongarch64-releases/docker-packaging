@@ -46,17 +46,9 @@ fi
 
 mkdir -p "$OUTDIR"
 
-if ! command -v xx-info &> /dev/null; then
-  echo >&2 "error: xx cross compilation helper is required"
-  exit 1
-fi
-
 for l in $(gen-ver "${SRCDIR}"); do
   export "${l?}"
 done
-
-xx-go --wrap
-fix-cc
 
 rpmDefine=(
   --define "_version ${GENVER_PKG_VERSION}"
@@ -65,10 +57,8 @@ rpmDefine=(
   --define "_commit ${GENVER_COMMIT}"
 )
 
-pkgoutput="${OUTDIR}/${DISTRO_RELEASE}/${DISTRO_SUITE}/$(xx-info arch)"
-if [ -n "$(xx-info variant)" ]; then
-  pkgoutput="${pkgoutput}/$(xx-info variant)"
-fi
+# 原生构建（loong64），产物路径里的架构名沿用 Go 风格的 loong64
+pkgoutput="${OUTDIR}/${DISTRO_RELEASE}/${DISTRO_SUITE}/loong64"
 
 case "$DISTRO_NAME" in
   centos*|oraclelinux*)
@@ -80,7 +70,9 @@ set -x
 
 sed 's#/usr/local/bin/containerd#/usr/bin/containerd#g' "${SRCDIR}/containerd.service" > /root/rpmbuild/SOURCES/containerd.service
 
-rpmbuild --target $(xx-info rhel-arch) $PKG_RPM_BUILDFLAGS "${rpmDefine[@]}" /root/rpmbuild/SPECS/*.spec
+# note: on loongarch64, rpm names the architecture "loongarch64" (not the
+# Go-style "loong64").
+rpmbuild --target loongarch64 $PKG_RPM_BUILDFLAGS "${rpmDefine[@]}" /root/rpmbuild/SPECS/*.spec
 mkdir -p "${pkgoutput}"
 cp ./RPMS/*/*.* "${pkgoutput}"/
 if [ "$(ls -A ./SRPMS)" ]; then

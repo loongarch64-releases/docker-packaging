@@ -18,7 +18,7 @@ ARG ALPINE_VERSION="3.23"
 
 FROM scratch AS bin
 
-FROM --platform=$BUILDPLATFORM alpine:${ALPINE_VERSION} AS releaser
+FROM --platform=$BUILDPLATFORM lcr.loongnix.cn/library/alpine:${ALPINE_VERSION} AS releaser
 RUN apk add --no-cache bash findutils
 WORKDIR /out
 ARG TARGETOS

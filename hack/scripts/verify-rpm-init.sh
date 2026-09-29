@@ -52,7 +52,7 @@ case "$pkgrelease" in
     dnf config-manager --enable ol10_addons ol10_codeready_builder
     dnf install -y findutils
     ;;
-  fedora*|rhel*)
+  fedora*|rhel*|anolis*)
     dnf install -y findutils dnf-plugins-core
     ;;
   rockylinux8|almalinux8)
