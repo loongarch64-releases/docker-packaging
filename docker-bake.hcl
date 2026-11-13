@@ -559,7 +559,7 @@ target "_pkg-buildx" {
     PKG_NAME = PKG_NAME != null && PKG_NAME != "" ? PKG_NAME : "docker-buildx-plugin"
     PKG_REPO = PKG_REPO != null && PKG_REPO != "" ? PKG_REPO : "https://github.com/docker/buildx.git"
     PKG_REF = PKG_REF != null && PKG_REF != "" ? PKG_REF : "master"
-    GO_VERSION = GO_VERSION != null && GO_VERSION != "" ? GO_VERSION : "1.26" # https://github.com/docker/buildx/blob/master/Dockerfile
+    GO_VERSION = GO_VERSION != null && GO_VERSION != "" ? GO_VERSION : "1.27" # https://github.com/docker/buildx/blob/master/Dockerfile
     GO_IMAGE_VARIANT = GO_IMAGE_VARIANT != null && GO_IMAGE_VARIANT != "" ? GO_IMAGE_VARIANT : "bookworm"
     PKG_DEB_EPOCH = PKG_DEB_EPOCH != null && PKG_DEB_EPOCH != "" ? PKG_DEB_EPOCH : ""
     PKG_REMOTE_DOCKERFILE = "Dockerfile"
@@ -571,7 +571,7 @@ target "_pkg-compose" {
     PKG_NAME = PKG_NAME != null && PKG_NAME != "" ? PKG_NAME : "docker-compose-plugin"
     PKG_REPO = PKG_REPO != null && PKG_REPO != "" ? PKG_REPO : "https://github.com/docker/compose.git"
     PKG_REF = PKG_REF != null && PKG_REF != "" ? PKG_REF : "main"
-    GO_VERSION = GO_VERSION != null && GO_VERSION != "" ? GO_VERSION : "1.26.8" # https://github.com/docker/compose/blob/main/Dockerfile
+    GO_VERSION = GO_VERSION != null && GO_VERSION != "" ? GO_VERSION : "1.27.4" # https://github.com/docker/compose/blob/main/Dockerfile
     GO_IMAGE_VARIANT = GO_IMAGE_VARIANT != null && GO_IMAGE_VARIANT != "" ? GO_IMAGE_VARIANT : "bookworm"
     PKG_DEB_EPOCH = PKG_DEB_EPOCH != null && PKG_DEB_EPOCH != "" ? PKG_DEB_EPOCH : ""
     PKG_REMOTE_DOCKERFILE = "Dockerfile"
@@ -583,7 +583,7 @@ target "_pkg-containerd" {
     PKG_NAME = PKG_NAME != null && PKG_NAME != "" ? PKG_NAME : "containerd"
     PKG_REPO = PKG_REPO != null && PKG_REPO != "" ? PKG_REPO : "https://github.com/containerd/containerd.git"
     PKG_REF = PKG_REF != null && PKG_REF != "" ? PKG_REF : "release/2.4"
-    GO_VERSION = GO_VERSION != null && GO_VERSION != "" ? GO_VERSION : "1.27.1" # https://github.com/containerd/containerd/blob/release/2.4/.github/workflows/release/Dockerfile
+    GO_VERSION = GO_VERSION != null && GO_VERSION != "" ? GO_VERSION : "1.27.4" # https://github.com/containerd/containerd/blob/release/2.4/.github/workflows/release/Dockerfile
     GO_IMAGE_VARIANT = GO_IMAGE_VARIANT != null && GO_IMAGE_VARIANT != "" ? GO_IMAGE_VARIANT : "bookworm"
     PKG_DEB_EPOCH = PKG_DEB_EPOCH != null && PKG_DEB_EPOCH != "" ? PKG_DEB_EPOCH : ""
     RUNC_REF = RUNC_REF != null && RUNC_REF != "" ? RUNC_REF : null
@@ -596,7 +596,7 @@ target "_pkg-credential-helpers" {
     PKG_NAME = PKG_NAME != null && PKG_NAME != "" ? PKG_NAME : "docker-credential-helpers"
     PKG_REPO = PKG_REPO != null && PKG_REPO != "" ? PKG_REPO : "https://github.com/docker/docker-credential-helpers.git"
     PKG_REF = PKG_REF != null && PKG_REF != "" ? PKG_REF : "main"
-    GO_VERSION = GO_VERSION != null && GO_VERSION != "" ? GO_VERSION : "1.26.8" # https://github.com/docker/docker-credential-helpers/blob/main/Dockerfile
+    GO_VERSION = GO_VERSION != null && GO_VERSION != "" ? GO_VERSION : "1.27.4" # https://github.com/docker/docker-credential-helpers/blob/main/Dockerfile
     GO_IMAGE_VARIANT = GO_IMAGE_VARIANT != null && GO_IMAGE_VARIANT != "" ? GO_IMAGE_VARIANT : "bookworm"
     PKG_DEB_EPOCH = PKG_DEB_EPOCH != null && PKG_DEB_EPOCH != "" ? PKG_DEB_EPOCH : ""
     PKG_REMOTE_DOCKERFILE = "Dockerfile"
@@ -611,7 +611,7 @@ target "_pkg-docker" {
     CLI_REPO = CLI_REPO != null && CLI_REPO != "" ? CLI_REPO : "https://github.com/docker/cli.git"
     CLI_REF = CLI_REF != null && CLI_REF != "" ? CLI_REF : "master"
     DOCKER_VERSION = DOCKER_VERSION
-    GO_VERSION = GO_VERSION != null && GO_VERSION != "" ? GO_VERSION : "1.26.8" # https://github.com/moby/moby/blob/master/Dockerfile
+    GO_VERSION = GO_VERSION != null && GO_VERSION != "" ? GO_VERSION : "1.27.4" # https://github.com/moby/moby/blob/master/Dockerfile
     GO_IMAGE_VARIANT = GO_IMAGE_VARIANT != null && GO_IMAGE_VARIANT != "" ? GO_IMAGE_VARIANT : "bookworm"
     PKG_REMOTE_DOCKERFILE = "Dockerfile"
   }
@@ -623,7 +623,7 @@ target "_pkg-docker-cli" {
     PKG_REPO = PKG_REPO != null && PKG_REPO != "" ? PKG_REPO : "https://github.com/docker/cli.git"
     PKG_REF = PKG_REF != null && PKG_REF != "" ? PKG_REF : "master"
     DOCKER_VERSION = DOCKER_VERSION
-    GO_VERSION = GO_VERSION != null && GO_VERSION != "" ? GO_VERSION : "1.26.8" # https://github.com/docker/cli/blob/master/Dockerfile
+    GO_VERSION = GO_VERSION != null && GO_VERSION != "" ? GO_VERSION : "1.27.4" # https://github.com/docker/cli/blob/master/Dockerfile
     GO_IMAGE_VARIANT = GO_IMAGE_VARIANT != null && GO_IMAGE_VARIANT != "" ? GO_IMAGE_VARIANT : "bookworm"
     PKG_DEB_EPOCH = PKG_DEB_EPOCH != null && PKG_DEB_EPOCH != "" ? PKG_DEB_EPOCH : "5"
     PKG_REMOTE_DOCKERFILE = "Dockerfile"
@@ -636,7 +636,7 @@ target "_pkg-docker-engine" {
     PKG_REPO = PKG_REPO != null && PKG_REPO != "" ? PKG_REPO : "https://github.com/docker/docker.git"
     PKG_REF = PKG_REF != null && PKG_REF != "" ? PKG_REF : "master"
     DOCKER_VERSION = DOCKER_VERSION
-    GO_VERSION = GO_VERSION != null && GO_VERSION != "" ? GO_VERSION : "1.26.8" # https://github.com/moby/moby/blob/master/Dockerfile
+    GO_VERSION = GO_VERSION != null && GO_VERSION != "" ? GO_VERSION : "1.27.4" # https://github.com/moby/moby/blob/master/Dockerfile
     GO_IMAGE_VARIANT = GO_IMAGE_VARIANT != null && GO_IMAGE_VARIANT != "" ? GO_IMAGE_VARIANT : "bookworm"
     PKG_DEB_EPOCH = PKG_DEB_EPOCH != null && PKG_DEB_EPOCH != "" ? PKG_DEB_EPOCH : "5"
     PKG_REMOTE_DOCKERFILE = "Dockerfile"
@@ -648,7 +648,7 @@ target "_pkg-model" {
     PKG_NAME = PKG_NAME != null && PKG_NAME != "" ? PKG_NAME : "docker-model-plugin"
     PKG_REPO = PKG_REPO != null && PKG_REPO != "" ? PKG_REPO : "https://github.com/docker/model-runner.git"
     PKG_REF = PKG_REF != null && PKG_REF != "" ? PKG_REF : "main"
-    GO_VERSION = GO_VERSION != null && GO_VERSION != "" ? GO_VERSION : "1.25" # https://github.com/docker/model-runner/blob/main/cmd/cli/Dockerfile
+    GO_VERSION = GO_VERSION != null && GO_VERSION != "" ? GO_VERSION : "1.26.10" # https://github.com/docker/model-runner/blob/main/cmd/cli/Dockerfile
     GO_IMAGE_VARIANT = GO_IMAGE_VARIANT != null && GO_IMAGE_VARIANT != "" ? GO_IMAGE_VARIANT : "bookworm"
     PKG_DEB_EPOCH = PKG_DEB_EPOCH != null && PKG_DEB_EPOCH != "" ? PKG_DEB_EPOCH : ""
     PKG_REMOTE_DOCKERFILE = "Dockerfile"
@@ -660,7 +660,7 @@ target "_pkg-agent" {
     PKG_NAME = PKG_NAME != null && PKG_NAME != "" ? PKG_NAME : "docker-agent-plugin"
     PKG_REPO = PKG_REPO != null && PKG_REPO != "" ? PKG_REPO : "https://github.com/docker/docker-agent.git"
     PKG_REF = PKG_REF != null && PKG_REF != "" ? PKG_REF : "main"
-    GO_VERSION = GO_VERSION != null && GO_VERSION != "" ? GO_VERSION : "1.27.0" # https://github.com/docker/docker-agent/blob/main/Dockerfile
+    GO_VERSION = GO_VERSION != null && GO_VERSION != "" ? GO_VERSION : "1.27.4" # https://github.com/docker/docker-agent/blob/main/Dockerfile
     GO_IMAGE_VARIANT = GO_IMAGE_VARIANT != null && GO_IMAGE_VARIANT != "" ? GO_IMAGE_VARIANT : "bookworm"
     PKG_DEB_EPOCH = PKG_DEB_EPOCH != null && PKG_DEB_EPOCH != "" ? PKG_DEB_EPOCH : ""
     PKG_REMOTE_DOCKERFILE = "Dockerfile"
